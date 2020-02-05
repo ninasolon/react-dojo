@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import Home from "./components/Home";
+import UserInfo from "./components/UserInfo";
+import UserRepos from "./components/UserRepos";
 import "./App.css";
 
 function App() {
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
+  const [repos, setRepos] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const searchUser = e => {
     e.preventDefault();
@@ -12,6 +16,19 @@ function App() {
       .then(
         result => {
           setUser(result);
+        },
+        error => {
+          setError(error);
+        }
+      );
+  };
+  const showRepos = e => {
+    e.preventDefault();
+    fetch(`https://api.github.com/users/${inputValue}/repos`)
+      .then(res => res.json())
+      .then(
+        result => {
+          setRepos(result);
         },
         error => {
           setError(error);
@@ -29,26 +46,15 @@ function App() {
     return (
       <>
         {!user ? (
-          <div>
-            <label htmlFor="username">Usuário:</label>
-            <input
-              id="username"
-              type="text"
-              value={inputValue}
-              onChange={e => setInputValue(e.target.value)}
-            />
-            <button onClick={searchUser}>buscar</button>
-          </div>
+          <Home
+            input={inputValue}
+            change={e => setInputValue(e.target.value)}
+            search={searchUser}
+          />
         ) : (
           <div>
-            <div>
-              <img src={user.avatar_url} alt="Foto do usuário"></img>
-              <p>{user.name}</p>
-              <a href={user.url}>{user.login}</a>
-              <p>{user.bio}</p>
-              <p>{user.location}</p>
-            </div>
-            <button onClick={clearUser}>voltar</button>
+            <UserInfo user={user} repos={showRepos} clear={clearUser} />
+            {repos ? <UserRepos repos={repos} /> : null}
           </div>
         )}
       </>
