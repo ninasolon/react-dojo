@@ -39,6 +39,7 @@ function App() {
     e.preventDefault();
     setUser(null);
     setInputValue("");
+    setRepos("");
   };
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -52,7 +53,7 @@ function App() {
             search={searchUser}
           />
         ) : (
-          <div>
+          <div className="card-container">
             <UserInfo user={user} repos={showRepos} clear={clearUser} />
             {repos ? <UserRepos repos={repos} /> : null}
           </div>
