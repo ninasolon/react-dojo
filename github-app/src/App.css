@@ -5,20 +5,30 @@ body {
 }
 
 .card {
+  overflow: scroll;
   background-color: #f9f9f9;
   border-radius: 10px;
-  min-height: 350px;
-  width: 320px;
+  height: 400px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.2)
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
 .card + .card {
   margin-left: 1.5rem;
+}
+
+.repos-card {
+  justify-content: start;
+}
+
+.repos-card ol {
+  padding-inline-start: 0;
+  width: 75%;
 }
 
 .github-logo {
@@ -86,7 +96,8 @@ button {
   font-weight: bold;
 }
 
-p, a {
+p,
+a {
   margin: 0;
   line-height: 1.5;
 }
@@ -103,4 +114,23 @@ p, a {
   background-color: white;
   border: 1px solid #51afa6;
   color: #51afa6;
+}
+
+.repos-item {
+  border-bottom: 1px solid #ccc;
+  padding: 1rem 0;
+}
+
+.repos-item:last-of-type {
+  border-bottom: none;
+}
+
+.repos-item a {
+  color: #51afa6;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.repos-item span {
+  font-weight: bold;
 }
