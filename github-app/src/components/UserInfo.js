@@ -22,7 +22,7 @@ function UserInfo({ match }) {
         setError(error);
       }
     );
-  // const { user, repos, clear } = props;
+
   return (
     <div className="card">
       <div>
