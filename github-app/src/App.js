@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-// import {
-//   BrowserRouter as Router,
-//   Switch,
-//   Route,
-//   Link,
-//   useRouteMatch,
-//   useParams
-// } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams
+} from "react-router-dom";
 import "./App.css";
 
 // pages
@@ -19,19 +19,19 @@ function App() {
   const [user, setUser] = useState(null);
   const [repos, setRepos] = useState(null);
   const [inputValue, setInputValue] = useState("");
-  const searchUser = e => {
-    e.preventDefault();
-    fetch(`https://api.github.com/users/${inputValue}`)
-      .then(res => res.json())
-      .then(
-        result => {
-          setUser(result);
-        },
-        error => {
-          setError(error);
-        }
-      );
-  };
+  // const searchUser = e => {
+  //   e.preventDefault();
+  //   fetch(`https://api.github.com/users/${inputValue}`)
+  //     .then(res => res.json())
+  //     .then(
+  //       result => {
+  //         setUser(result);
+  //       },
+  //       error => {
+  //         setError(error);
+  //       }
+  //     );
+  // };
   const showRepos = e => {
     e.preventDefault();
     fetch(`https://api.github.com/users/${inputValue}/repos`)
@@ -55,8 +55,11 @@ function App() {
     return <div>Error: {error.message}</div>;
   } else {
     return (
-      <>
-        {!user ? (
+      <Router>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/user/:id" component={UserInfo} />
+        {/* <Route exact path={`/user/${match.path}/repos`} component={UserRepos} /> */}
+        {/* {!user ? (
           <Home
             input={inputValue}
             change={e => setInputValue(e.target.value)}
@@ -67,8 +70,8 @@ function App() {
             <UserInfo user={user} repos={showRepos} clear={clearUser} />
             {repos ? <UserRepos repos={repos} /> : null}
           </div>
-        )}
-      </>
+        )} */}
+      </Router>
     );
   }
 }

@@ -1,11 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams
+} from "react-router-dom";
 
-export default function UserInfo(props) {
-  const { user, repos, clear } = props;
+function UserInfo({ match }) {
+  const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
+
+  fetch(`https://api.github.com/users/${match.params.id}`)
+    .then(res => res.json())
+    .then(
+      result => {
+        setUser(result);
+      },
+      error => {
+        setError(error);
+      }
+    );
+  // const { user, repos, clear } = props;
   return (
     <div className="card">
       <div>
-        <img className="user-avatar" src={user.avatar_url} alt="Foto do usuário"></img>
+        <img
+          className="user-avatar"
+          src={user.avatar_url}
+          alt="Foto do usuário"
+        ></img>
         <div className="user-info">
           <p className="user-name">{user.name}</p>
           <a href={user.url}>@{user.login}</a>
@@ -14,9 +39,15 @@ export default function UserInfo(props) {
         </div>
       </div>
       <div className="btn-container">
-        <button className="btn-repos" onClick={repos}>Listar repositórios</button>
-        <button onClick={clear}>Pesquisar outro usuário</button>
+        <button className="btn-repos">
+          <Link to={`${match.url}/repos`}>Listar repositórios</Link>
+        </button>
+        <button>
+          <Link to="/">Pesquisar outro usuário</Link>
+        </button>
       </div>
     </div>
   );
 }
+
+export default UserInfo;
