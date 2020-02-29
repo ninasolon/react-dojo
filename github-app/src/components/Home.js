@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [inputValue, setInputValue] = useState("");
@@ -28,7 +21,7 @@ function Home() {
           onChange={e => setInputValue(e.target.value)}
         />
         <button>
-          <Link to={`user/${inputValue}`}>Buscar</Link>
+          <Link to={`${inputValue}`}>Buscar</Link>
         </button>
       </div>
     </div>
